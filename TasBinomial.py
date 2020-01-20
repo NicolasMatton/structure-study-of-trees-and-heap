@@ -353,6 +353,7 @@ def ConsIter_Tableau(liste):#O(n)
                 
         else:                   #le noeud a deux fils
             pere = i 
+            newI = 0;
             while(pere <= maxi):
                 if(pere*2 + 1> maxi): #on est sur une feuille
                     break
@@ -360,20 +361,18 @@ def ConsIter_Tableau(liste):#O(n)
                     if(inf(T[pere*2 + 1],T[pere])):
                         T[pere], T[pere*2 + 1] = Echanger(T[pere], T[pere*2 + 1])
                     break
-                elif(inf(T[pere*2 +1],T[pere])): #le fils gauche est inferieur au pere
-                    if(inf(T[pere*2 +1],T[pere*2 + 2])): #le fils gauche < fils droit
-                        T[pere] , T[pere*2 + 1] = Echanger(T[pere] , T[pere*2 + 1])
-                        pere = i*2 + 1
-                        
-                    else: #fils gauche > fils droit
-                        T[pere] , T[pere*2 + 2] = Echanger(T[pere] , T[pere*2 + 2])
-                        pere = pere*2 + 2
-                        
-                elif(inf(T[pere*2 + 2],T[pere])): #fils droit < pere
-                    T[pere], T[pere*2 + 2] = Echanger(T[pere],T[pere*2 + 2 ])
-                    pere = pere*2 +2
+                
                 else:
-                    break
+                    if(inf(T[pere*2 +1],T[2*pere + 2])):
+                        newI = 2*pere + 1
+                    else:
+                        newI = 2*pere + 2
+                    if(inf(T[newI],T[pere])):
+                        T[pere],T[newI] = Echanger(T[pere],T[newI])
+                        pere = newI
+                    else:
+                        break
+                
         i -= 1
     return T
 
